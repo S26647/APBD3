@@ -1,3 +1,14 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿
+using APBD3;
 
-Console.WriteLine("Hello, World!");
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        LuquidContainer lc = new LuquidContainer(10.1);
+        LuquidContainer lc2 = new LuquidContainer(12.2);
+        
+        Console.WriteLine(lc.LoadWeight);
+        Console.WriteLine(lc2.LoadWeight);
+    }
+}
