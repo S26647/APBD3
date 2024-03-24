@@ -1,11 +1,32 @@
 ﻿namespace APBD3;
 
-public class GasContainer : Container, IHazadNotifier
+public class GasContainer : Container, IHazardNotifier
 {
     private double _pressure;
-    public GasContainer(double maxLoad, bool isHazardous, double pressure) : base(maxLoad, isHazardous)
+    public GasContainer(double maxLoad, double height, double weight, double depth, bool isHazardous, double pressure) : base(maxLoad, height, weight, depth)
     {
         _pressure = pressure;
+    }
+
+    public override void EmptyLoad()
+    {
+        LoadWeight *= 0.05;
+    }
+
+    public override void LoadContainer(double loadWeight)
+    {
+        try
+        {
+            base.LoadContainer(loadWeight);
+            if (LoadWeight + loadWeight > MaxLoad)
+            {
+                NotifyAboutDanger(SerialNumber);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     public void NotifyAboutDanger(string serialNumber)
@@ -14,5 +35,11 @@ public class GasContainer : Container, IHazadNotifier
         {
             Console.WriteLine($"Warning container {serialNumber} has critical situation!");
         }
+    }
+
+    public override void PrintInfoAboutContainer()
+    {
+        base.PrintInfoAboutContainer();
+        Console.Write($"pressure = {_pressure})");
     }
 }

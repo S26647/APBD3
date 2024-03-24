@@ -2,12 +2,17 @@ namespace APBD3;
 
 public class Product
 {
-    private string _name { get; }
-    private double _temperature { get; }
+    public string Name { get; }
+    public double Temperature { get; }
 
     public Product(string name, double temperature)
     {
-        _name = name;
-        _temperature = temperature;
+        Name = name;
+        Temperature = temperature;
+    }
+
+    public Product(string name)
+    {
+        Name = name;
     }
 }

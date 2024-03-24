@@ -1,6 +1,6 @@
 namespace APBD3;
 
-public interface IHazadNotifier
+public interface IHazardNotifier
 {
     void NotifyAboutDanger(string serialNumber);
 }
