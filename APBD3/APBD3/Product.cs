@@ -2,14 +2,12 @@ namespace APBD3;
 
 public class Product
 {
-    public string Name { get; set; }
-    public bool Dangerous { get; set; }
-    public double Temperature { get; set; }
+    private string _name { get; }
+    private double _temperature { get; }
 
-    public Product(string name, bool dangerous, double temperature)
+    public Product(string name, double temperature)
     {
-        Name = name;
-        Dangerous = dangerous;
-        Temperature = temperature;
+        _name = name;
+        _temperature = temperature;
     }
 }

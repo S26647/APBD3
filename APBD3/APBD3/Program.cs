@@ -5,15 +5,20 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        LuquidContainer lc = new LuquidContainer(10.1, false);
-        LuquidContainer lc2 = new LuquidContainer(12.1, true);
-        GasContainer gc = new GasContainer(10.1, false);
-
-        Product banan = new Product("banan", false, 10);
-        gc.LoadContainer(banan, 10.2);
+        LiquidContainer milkContainer = new LiquidContainer(1000, true);
+        GasContainer heliumContainer = new GasContainer(500, true, 1000);
+        Product milk = new Product("milk", 1000);
+        Product helium = new Product("helium",  100);
         
-        Console.WriteLine(lc.SerialNumber);
-        Console.WriteLine(lc2.SerialNumber);
-        Console.WriteLine(gc.SerialNumber);
+        heliumContainer.LoadContainer(helium, 500);
+        heliumContainer.EmptyLoad();
+        Console.WriteLine(heliumContainer.LoadWeight);
+        
+        milkContainer.LoadContainer(milk, 950);
+
+        Console.WriteLine($"Milk Container Number: {milkContainer.SerialNumber}");
+        Console.WriteLine($"Helium Container Number: {heliumContainer.SerialNumber}");
+
+        
     }
 }

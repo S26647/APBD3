@@ -2,8 +2,12 @@
 
 public class CoolingContainer : Container, IHazadNotifier
 {
-    public CoolingContainer(double maxLoad, bool isHazardous) : base(maxLoad, isHazardous)
+    private Product _product;
+    private double _temperature;
+    public CoolingContainer(double maxLoad, bool isHazardous, Product product, double temperature) : base(maxLoad, isHazardous)
     {
+        _product = product;
+        _temperature = temperature;
     }
 
     public void NotifyAboutDanger(string serialNumber)
