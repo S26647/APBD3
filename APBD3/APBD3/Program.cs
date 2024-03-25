@@ -8,10 +8,15 @@ public static class Program
     {
         List<ContainerShip?> shipsList = new List<ContainerShip?>();
         List<Container?> containersList = new List<Container?>();
+        ContainerShip ship20 = new ContainerShip("Ship20", 10, 10, 10);
+        LiquidContainer lq = new LiquidContainer(10, 10, 1, 10, false);
+        shipsList.Add(ship20);
+        shipsList.Find(s => s == ship20).LoadOnShip(lq);
         shipsList.Add(new ContainerShip("Ship1",10, 10, 10));
         shipsList.Add(new ContainerShip("Ship2",10, 10, 10));
+        
         containersList.Add(new LiquidContainer(100, 10, 10, 10, true));
-
+        
         while (true)
         {
             try
@@ -32,6 +37,7 @@ public static class Program
                 {
                     Console.WriteLine($"{commandNumber++}. (rs) Remove container ship");
                     Console.WriteLine($"{commandNumber++}. (us) Unload ship");
+                    Console.WriteLine($"{commandNumber++}. (uc) Unload container from ship");
                 }
                 if (shipsList.Count > 1)
                 {
@@ -42,7 +48,6 @@ public static class Program
                 {
                     Console.WriteLine($"{commandNumber++}. (rc) Remove container");
                     Console.WriteLine($"{commandNumber++}. (lc) Load Container");
-                    Console.WriteLine($"{commandNumber++}. (uc) Unload container from ship");
                     Console.WriteLine($"{commandNumber++}. (sc) Swap containers");
                 }
 
@@ -84,6 +89,7 @@ public static class Program
                                     Convert.ToBoolean(lc?[4]));
                                 containersList.Add(liquidContainer);
                                 break;
+                            
                             case "G":
                                 Console.WriteLine("Enter maxLoad, height, weight, depth, pressure");
                                 string[]? gc = Console.ReadLine()?.Split(",");
@@ -94,6 +100,7 @@ public static class Program
                                     Convert.ToDouble(gc?[4]));
                                 containersList.Add(gasContainer);
                                 break;
+                            
                             case "C":
                                 Console.WriteLine(
                                     "Enter maxLoad, height, weight, depth, product, container temperature");
@@ -107,14 +114,15 @@ public static class Program
                                 containersList.Add(coolingContainer);
                                 break;
                         }
-
                         break;
+                    
                     case "rs":
                         Console.WriteLine("List of possible ships:");
                         PrintShipList(shipsList);
                         command = Console.ReadLine()?.ToLower();
                         shipsList.RemoveAll(c => c.Name.ToLower() == command);
                         break;
+                    
                     case "us":
                         Console.WriteLine("List of possible ships:");
                         PrintShipList(shipsList);
@@ -124,9 +132,9 @@ public static class Program
                         {
                             containersList.Add(container);
                         }
-
                         shipsList.Find(c => c.Name.ToLower() == command)?.UnloadWholeShip();
                         break;
+                    
                     case "mc":
                         Console.WriteLine("List of possible ships:");
                         Console.WriteLine("Choose shipFrom, shipTo, load");
@@ -136,14 +144,15 @@ public static class Program
                         ContainerShip? ship2 = shipsList.Find(s => s.Name.ToLower() == commandSplit?[1]);
                         Container? container1 = ship1.ContainersList.Find(c => c.SerialNumber.ToLower() == commandSplit?[2]);
                         shipsList.Find(s => s.Name.ToLower() == commandSplit?[0]).MoveToAnotherShip(ship2, container1);
-                        
                         break;
+                    
                     case "rc":
                         Console.WriteLine("List of possible containers:");
                         PrintContainerList(containersList);
                         command = Console.ReadLine()?.ToLower();
                         containersList.RemoveAll(c => c.SerialNumber.ToLower() == command);
                         break;
+                    
                     case "lc":
                         Console.WriteLine("List of possible containers:");
                         PrintContainerList(containersList);
@@ -152,10 +161,34 @@ public static class Program
                         double load = Convert.ToDouble(Console.ReadLine()?.ToLower());
                         containersList.Find(c => c.SerialNumber.ToLower() == command)?.LoadContainer(load);
                         break;
+                    
                     case "uc":
+                        Console.WriteLine("List of possible ships:");
+                        PrintShipList(shipsList);
+                        Console.WriteLine("choose ship, load");
+                        commandSplit = Console.ReadLine()?.ToLower().Split(",");
+                        ship1 = shipsList.Find(s => s.Name.ToLower() == commandSplit?[0]);
+                        container1 = ship1.ContainersList.Find(c => c.SerialNumber.ToLower() == commandSplit?[1]);
+                        ship1.UnloadFromShip(container1);
+                        containersList.Add(container1);
                         break;
+                    
                     case "sc":
+                        Console.WriteLine("List of possible ships:");
+                        PrintShipList(shipsList);
+                        Console.WriteLine("choose ship, load");
+                        commandSplit = Console.ReadLine()?.ToLower().Split(",");
+                        ship1 = shipsList.Find(s => s.Name.ToLower() == commandSplit?[0]);
+                        container1 = ship1.ContainersList.Find(c => c.SerialNumber.ToLower() == commandSplit?[1]);
+                        Console.WriteLine("List of possible containers:");
+                        PrintContainerList(containersList);
+                        command = Console.ReadLine()?.ToLower();
+                        Container? container2 = containersList.Find(c => c.SerialNumber.ToLower() == command);
+                        ship1.SwapContainers(container1, container2);
+                        containersList.RemoveAll(c => c == container2);
+                        containersList.Add(container1);
                         break;
+                    
                     case "lcs":
                         Console.WriteLine("List of possible containers:");
                         PrintContainerList(containersList);
@@ -166,8 +199,9 @@ public static class Program
                         Console.WriteLine("List of possible ships:");
                         PrintShipList(shipsList);
                         command = Console.ReadLine()?.ToLower();
-                        shipsList.Find(c => c.Name.ToLower() == command)?.LoadOnShip(con);
+                        shipsList.Find(s => s.Name.ToLower() == command)?.LoadOnShip(con);
                         break;
+                    
                     case "ex":
                         Environment.Exit(0);
                         break;
@@ -189,6 +223,7 @@ public static class Program
         }
         else
         {
+            commandNumber = 1;
             foreach (var ship in list)
             {
                 Console.Write($"{commandNumber++}. ");
@@ -206,6 +241,7 @@ public static class Program
         }
         else
         {
+            commandNumber = 1;
             foreach (var container in list)
             {
                 Console.Write($"{commandNumber++}. ");

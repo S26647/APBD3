@@ -24,25 +24,28 @@ public class ContainerShip
         CurrentContainersWeight += container.Weight + container.LoadWeight;
     }
 
-    public void UnloadFromShip(int index)
+    public void UnloadFromShip(Container container)
     {
-        CurrentContainersWeight -= ContainersList.ElementAt(index).Weight + ContainersList.ElementAt(index).LoadWeight;
-        ContainersList.RemoveAt(index);
+        CurrentContainersWeight -= container.Weight + container.LoadWeight;
+        ContainersList.RemoveAll(c => c == container);
     }
 
     public void UnloadWholeShip()
     {
         ContainersList = new List<Container?>();
+        CurrentContainersWeight = 0;
     }
 
-    public void SwapContainers(string serialNumber1, string serialNumber2)
+    public void SwapContainers(Container con1, Container con2)
     {
-        
+        LoadOnShip(con2);
+        UnloadFromShip(con1);
     }
 
     public void MoveToAnotherShip(ContainerShip? ship, Container? con1)
     {
         ship.ContainersList.Add(ContainersList.Find(c => c == con1));
+        CurrentContainersWeight -= con1.LoadWeight + con1.Weight;
         ContainersList.RemoveAll(c => c == con1);
     }
 
