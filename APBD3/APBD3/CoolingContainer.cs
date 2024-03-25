@@ -3,45 +3,32 @@
 public class CoolingContainer : Container
 {
     public double ContainerTemperature;
-    public Product LoadProduct;
-    public CoolingContainer(double maxLoad, double height, double weight, double depth, bool isHazardous, Product product, double containerTemperature) : base(maxLoad, height, weight, depth)
+    public string ProductType;
+    public CoolingContainer(double maxLoad, double height, double weight, double depth, String productType, double containerTemperature) : base(maxLoad, height, weight, depth)
     {
-        try
-        {
-            LoadProduct = product;
-            ContainerTemperature = containerTemperature;
-            
-            if (ContainerTemperature < product.Temperature)
-            {
-                throw new ProductException("Container's temperature too low for this product");
-            }
-        }
-        catch (ProductException e)
-        {
-            Console.WriteLine(e);
-        }
+        ProductType = productType;
+        ContainerTemperature = containerTemperature;
     }
-    
-    public void LoadContainer(double loadWeight, Product product)
+
+    public void LoadContainer(double loadWeight, string productType, double productTemperature)
     {
         base.LoadContainer(loadWeight);
-        if (LoadProduct != product && LoadProduct != null)
+        if (ProductType != productType && ProductType != null)
         {
             throw new ProductException("Can't put different products in one container!");
         }
-        if (LoadProduct != null && LoadProduct.Temperature < product.Temperature)
+        if (ProductType != null && ContainerTemperature < productTemperature)
         {
             throw new ProductException("Can't put that product in this container due to temperature!");
         }
         
-        LoadProduct = product;
+        ProductType = productType;
         LoadWeight += loadWeight;
-        
     }
 
     public override void PrintInfoAboutContainer()
     {
         base.PrintInfoAboutContainer();
-        Console.Write($"container temperature = {ContainerTemperature}, product = {LoadProduct.Name}, product temperature = {LoadProduct.Temperature})");
+        Console.WriteLine($"product = {ProductType}, container temperature = {ContainerTemperature})");
     }
 }

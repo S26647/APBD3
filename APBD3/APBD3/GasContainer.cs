@@ -3,7 +3,7 @@
 public class GasContainer : Container, IHazardNotifier
 {
     private double _pressure;
-    public GasContainer(double maxLoad, double height, double weight, double depth, bool isHazardous, double pressure) : base(maxLoad, height, weight, depth)
+    public GasContainer(double maxLoad, double height, double weight, double depth, double pressure) : base(maxLoad, height, weight, depth)
     {
         _pressure = pressure;
     }
@@ -40,6 +40,6 @@ public class GasContainer : Container, IHazardNotifier
     public override void PrintInfoAboutContainer()
     {
         base.PrintInfoAboutContainer();
-        Console.Write($"pressure = {_pressure})");
+        Console.WriteLine($"pressure = {_pressure})");
     }
 }

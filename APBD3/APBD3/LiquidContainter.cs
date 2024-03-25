@@ -15,6 +15,7 @@ public class LiquidContainer : Container, IHazardNotifier
 
     public override void LoadContainer(double loadWeight)
     {
+        base.LoadContainer(loadWeight);
         double allowedLoad;
         if (IsHazardous)
         {
@@ -34,13 +35,11 @@ public class LiquidContainer : Container, IHazardNotifier
         {
             NotifyAboutDanger(SerialNumber);
         }
-        
-        
     }
 
     public override void PrintInfoAboutContainer()
     {
         base.PrintInfoAboutContainer();
-        Console.Write($"hazardous = {IsHazardous})");
+        Console.WriteLine($"hazardous = {IsHazardous})");
     }
 }

@@ -8,11 +8,10 @@ public class ContainerShip
     public int MaxContainers;
     public double MaxContainersWeight;
     public double CurrentContainersWeight;
-    public static int Number = 1;
 
-    public ContainerShip(List<Container> containersList, string name, double maxSpeed, int maxContainers, double maxContainersWeight)
+    public ContainerShip(string name, double maxSpeed, int maxContainers, double maxContainersWeight)
     {
-        ContainersList = containersList;
+        ContainersList = new List<Container>();
         Name = name;
         MaxSpeed = maxSpeed;
         MaxContainers = maxContainers;
@@ -46,21 +45,13 @@ public class ContainerShip
         
     }
 
-    public void PrintInfoAboutContainer(int index)
-    {
-        Console.WriteLine($"Container's max load: {ContainersList.ElementAt(index).MaxLoad}");
-        Console.WriteLine($"Container's height: {ContainersList.ElementAt(index).Height}");
-        Console.WriteLine($"Container's weight: {ContainersList.ElementAt(index).Weight}");
-        Console.WriteLine($"Container's depth: {ContainersList.ElementAt(index).Depth}");
-        Console.WriteLine($"Container's serial number: {ContainersList.ElementAt(index).SerialNumber}");
-    }
-
     public void PrintInfoAboutShip()
     {
-        Console.WriteLine($"{Number++}. {Name} (maxSpeed = {MaxSpeed}, maxContainerNum = {MaxContainers}, maxWeight = {MaxContainersWeight})");
-        for (int i = 0; i < ContainersList.Count; i++)
+        Console.WriteLine($"{Name} (maxSpeed = {MaxSpeed}, maxContainerNum = {MaxContainers}, maxWeight = {MaxContainersWeight})");
+        foreach (var container in ContainersList)
         {
-            PrintInfoAboutContainer(i);
+            Console.Write("      ");
+            container.PrintInfoAboutContainer();
         }
     }
 }
