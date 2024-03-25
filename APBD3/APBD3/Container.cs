@@ -40,12 +40,12 @@ public abstract class Container
     
     public virtual void LoadContainer(double loadWeight)
     {
-        LoadWeight += loadWeight;
-        
         if (LoadWeight + loadWeight > MaxLoad)
         {
             throw new OverfillException("Load too heavy!");
         }
+        
+        LoadWeight += loadWeight;
     }
 
     public virtual void PrintInfoAboutContainer()

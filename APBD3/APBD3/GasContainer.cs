@@ -15,17 +15,10 @@ public class GasContainer : Container, IHazardNotifier
 
     public override void LoadContainer(double loadWeight)
     {
-        try
+        base.LoadContainer(loadWeight);
+        if (LoadWeight + loadWeight > MaxLoad)
         {
-            base.LoadContainer(loadWeight);
-            if (LoadWeight + loadWeight > MaxLoad)
-            {
-                NotifyAboutDanger(SerialNumber);
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
+            NotifyAboutDanger(SerialNumber);
         }
     }
 
